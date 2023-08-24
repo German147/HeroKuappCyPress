@@ -1,36 +1,34 @@
 /// <reference types="cypress"/>
 
-context("Open new page", () => {
+context("Practice On first Tests", () => {
   
   it("Add/Remove Elements ", () => {
 
     cy.visit("https://the-internet.herokuapp.com/add_remove_elements/");
 
     function AddingButtons(){ 
-      if (cy.get("button").first().should('exist')) {
-       
-        for (let btn = 8; btn <= 8; btn++)
+        for (let btn = 1; btn <= 8; btn++) { 
           cy.get("button")
             .first()
-            .should("have.text", "Add Element")
+            // .should("have.text", "Add Element")
             .click({ multiple: true });
-        btn++;
-      }
+        } 
     }
     AddingButtons()
+  
    
-    // function deleteButtons() { 
-    //   for (let btn = 8; btn != 1; btn--)
-    //       cy.get("button")
-    //   .last()
-    //   .should("have.text", "Delete")
-    //   .click({ multiple: true });
-    // }
+    function deleteButtons() { 
+         for (let btn = 8; btn >= 1; btn--) {
+             cy.get("button")
+               .last()
+               .should("have.text", "Delete")
+               .click({ multiple: true });
+         } 
+    }
+   deleteButtons()
 
   });
-
-
-  it('Open a new tap into the same tap', () => { 
+  it('Checks URL status code 200', () => { 
 
     cy.visit("https://the-internet.herokuapp.com/");
     //aqui checkeamos si la url /abtest esta habilitada con un status code 200
@@ -39,17 +37,19 @@ context("Open new page", () => {
     })
     //aqui checkeamos si la url /abtest esta habilitada con un status code 200
     if (cy.request('/abtest').then((response) => {
-        expect(response.status).to.eq(404)
+        expect(response.status).to.eq(200)
       })) {
         cy.visit("https://the-internet.herokuapp.com/abtest");
         cy.get('a').should('exist')
       }
- 
-    // cy.get('a').invoke("removeAttr", "target");
-    // cy.get('a').should('have.text', 'Elemental Selenium').click();
-    // cy.get("a").click("right", { multiple: true });')
 
   })
-   
+  it('Should Open a new Tap', () => {
+    cy.visit("https://the-internet.herokuapp.com/abtest");
+    cy.get('a').invoke("removeAttr", "target");
+    cy.get('a').should('have.text', 'Elemental Selenium');
+    cy.get("a").click("right", { multiple: true });
+    
+  })
 
 })
